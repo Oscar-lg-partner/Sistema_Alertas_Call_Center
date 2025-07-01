@@ -1,6 +1,6 @@
 {
   "name": "notificador-electron",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "main": "main.js",
   "description": "App de escritorio para tareas y notificaciones",
   "author": "Tu Nombre",
@@ -8,7 +8,9 @@
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "build": "electron-builder",
+    "publish": "electron-builder --publish=always"
   },
   "build": {
     "appId": "com.lgdev.notificador",
@@ -20,7 +22,7 @@
       {
         "provider": "github",
         "owner": "Oscar-lg-partner",
-        "repo": "REPO_DEL_PROYECTO"
+        "repo": "Sistema_Alertas_Call_Center"
       }
     ],
     "files": [
@@ -32,18 +34,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TU_USUARIO_GITHUB/REPO_DEL_PROYECTO"
+    "url": "https://github.com/Oscar-lg-partner/Sistema_Alertas_Call_Center"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.6.0",
-    "electron": "^37.1.0",
     "electron-updater": "^6.6.2",
     "mongoose": "^8.16.1",
     "node-notifier": "^10.0.1",
     "nodemailer": "^7.0.4"
   },
   "devDependencies": {
+    "electron": "^37.1.0",
     "electron-builder": "^26.0.12"
   }
 }
