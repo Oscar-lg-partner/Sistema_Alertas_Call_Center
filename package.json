@@ -1,6 +1,6 @@
 {
   "name": "notificador-electron",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "main.js",
   "description": "App de escritorio para tareas y notificaciones",
   "author": "Tu Nombre",
