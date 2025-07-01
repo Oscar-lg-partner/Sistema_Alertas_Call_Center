@@ -27,12 +27,12 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow();
 
-  mainWindow.webContents.once('did-finish-load', async () => {
+
     // Muestra mensaje usando el canal IPC y el método del renderer
-    await showMessageInRenderer("Se va a ejecutar autoUpdater.checkForUpdatesAndNotify()");
+    console.log("---------------------------------Se va a ejecutar autoUpdater.checkForUpdatesAndNotify()");
     // Inicia verificación de updates
     autoUpdater.checkForUpdatesAndNotify();
-  });
+ 
 
   // Ejecutar tarea periódica
   setInterval(checkTasksAndNotify, 60 * 1000);
@@ -40,7 +40,7 @@ app.whenReady().then(() => {
 
 // Eventos del autoUpdater
 autoUpdater.on('update-available', async () => {
-  console.log("✅ Actualización disponible");
+  console.log("---------------------Actualización disponible");
   await showMessageInRenderer("¡Nueva actualización disponible!");
 });
 
