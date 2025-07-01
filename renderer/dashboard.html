@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <style>
+      table { border-collapse: collapse; width: 100%; }
+      th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
+      th { background-color: #f2f2f2; }
+    </style>
+  </head>
+  <body>
+    <h2>Mis tareas</h2>
+
+    <input id="search" placeholder="Buscar por título" oninput="renderTasks()" />
+
+    <table>
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="taskTable"></tbody>
+    </table>
+
+    <!-- ✅ Este bloque está fuera de lo que se borra -->
+    <h3>Nueva tarea</h3>
+    <input id="title" placeholder="Nueva tarea" />
+    <input id="date" type="datetime-local" />
+    <button onclick="add()">Agregar</button>
+
+<!-- Modal oculto inicialmente -->
+<div id="editModal" style="display:none; position:fixed; top:20%; left:30%; background:#fff; border:1px solid #ccc; padding:20px; z-index:9999;">
+  <h3>Editar tarea</h3>
+  <input id="editTitle" placeholder="Título" /><br /><br />
+  <input id="editDate" type="datetime-local" /><br /><br />
+  <button onclick="saveEdit()">Guardar</button>
+  <button onclick="closeModal()">Cancelar</button>
+</div>
+
+
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>
