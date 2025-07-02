@@ -11,7 +11,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
       // En tu login.js, después de login exitoso:
       localStorage.setItem("userId", result.userId);
       window.location.href = "dashboard.html";
-      await window.api.showMessage("Login exitoso");
+      // await window.api.showMessage("Login exitoso");
       window.location.href = "dashboard.html";
     } else {
       await window.api.showMessage("Error: " + result.message);

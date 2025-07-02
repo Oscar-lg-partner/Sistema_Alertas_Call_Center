@@ -29,9 +29,7 @@ app.whenReady().then(() => {
    
   mainWindow.webContents.once('did-finish-load', async () => {
     autoUpdater.checkForUpdatesAndNotify();
-    await mainWindow.webContents.executeJavaScript(`
-      window.api.showMessage("autoUpdater.checkForUpdatesAndNotify() ejecutado correctamente");
-    `);
+
   });
 
   // Ejecutar tarea periódica
