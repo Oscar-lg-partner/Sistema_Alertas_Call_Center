@@ -17,16 +17,33 @@ function renderTasks() {
     .forEach((task, index) => {
       const row = table.insertRow();
 
-      row.insertCell(0).textContent = task.title;
-      row.insertCell(1).textContent = new Date(task.date).toLocaleString();
+      // Si la tarea fue notificada, aplica estilo
+      if (task.notified) {
+        row.classList.add("table-success"); // color verde claro de Bootstrap
+      }
 
+      const titleCell = row.insertCell(0);
+      const dateCell = row.insertCell(1);
       const actions = row.insertCell(2);
+
+      titleCell.innerHTML = task.title;
+
+      dateCell.innerHTML = `
+        ${new Date(task.date).toLocaleString()}
+        ${task.notified ? '<i class="bi bi-bell text-success ms-2" title="Ya fue notificada"></i>' : ''}
+      `;
+
       actions.innerHTML = `
-        <button onclick="editTask(${index})">Editar</button>
-        <button onclick="deleteTask(${index})">Eliminar</button>
+        <button class="btn btn-sm btn-outline-primary me-2" onclick="editTask(${index})">
+          <i class="bi bi-pencil-square"></i> Editar
+        </button>
+        <button class="btn btn-sm btn-outline-danger" onclick="deleteTask(${index})">
+          <i class="bi bi-trash"></i> Eliminar
+        </button>
       `;
     });
 }
+
 
 async function add() {
   const titleInput = document.getElementById("title");
@@ -103,14 +120,42 @@ function openEditModal(index) {
   }
   
   function updateTableRow(index) {
+    console.log("entra cada minuto");
+    
     const table = document.getElementById("taskTable");
-    const row = table.rows[index];
-    if (!row) return;
-  
     const task = tasks[index];
-    row.cells[0].textContent = task.title;
-    row.cells[1].textContent = new Date(task.date).toLocaleString();
+  
+    // Elimina la fila actual
+    table.deleteRow(index);
+  
+    // Inserta una nueva fila en la misma posición
+    const row = table.insertRow(index);
+  
+    if (task.notified) {
+      row.classList.add("table-success");
+    }
+  
+    const titleCell = row.insertCell(0);
+    const dateCell = row.insertCell(1);
+    const actions = row.insertCell(2);
+  
+    titleCell.innerHTML = task.title;
+  
+    dateCell.innerHTML = `
+      ${new Date(task.date).toLocaleString()}
+      ${task.notified ? '<i class="bi bi-bell-fill text-success ms-2" title="Ya fue notificada"></i>' : ''}
+    `;
+  
+    actions.innerHTML = `
+      <button class="btn btn-sm btn-outline-primary me-2" onclick="editTask(${index})">
+        <i class="bi bi-pencil-square"></i> Editar
+      </button>
+      <button class="btn btn-sm btn-outline-danger" onclick="deleteTask(${index})">
+        <i class="bi bi-trash"></i> Eliminar
+      </button>
+    `;
   }
+  
   
   
   function editTask(index) {
@@ -120,14 +165,22 @@ function openEditModal(index) {
 // Carga inicial
 loadTasks();
 
-// Notificaciones cada minuto
 setInterval(() => {
-  const now = new Date().toISOString();
-  tasks.forEach(task => {
-    if (!task.notified && task.date <= now) {
+  const now = new Date();
+
+  tasks.forEach(async (task, index) => {
+    const taskDate = new Date(task.date);
+
+    console.log(!task.notified, "<-- && ", taskDate, "<=", now, "-->", taskDate <= now);
+
+    if (!task.notified && taskDate <= now) {
+      console.log("notifications");
+
       new Notification("Recordatorio", { body: task.title });
       task.notified = true;
-      window.api.addTask(userId, task); // o mejor window.api.updateTask
+      await window.api.updateTask(userId, task._id, task);
+      updateTableRow(index);
     }
   });
-}, 60000);
+}, 5000);
+
