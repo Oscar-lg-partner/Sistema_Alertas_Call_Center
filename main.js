@@ -39,7 +39,7 @@ app.whenReady().then(() => {
 // Eventos del autoUpdater
 autoUpdater.on('update-available', async () => {
   await mainWindow.webContents.executeJavaScript(`
-    window.api.showMessage("updatae aqui");
+    window.api.showMessage("Nueva actualización disponible. Cierra y vuelve abrir para actualizar la App.");
   `);
   await showMessageInRenderer("¡Nueva actualización disponible!");
 });
